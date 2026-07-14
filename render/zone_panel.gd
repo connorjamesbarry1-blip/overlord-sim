@@ -1,7 +1,6 @@
 extends PanelContainer
 
-# Read-only view + command emitter. Never calls sim mutation methods directly.
-# Player interaction fires signals on SimState; SimState handles them internally.
+signal paint_mode_requested(type: int)
 
 var _worker_summary: Label
 var _zone_list: VBoxContainer
@@ -37,10 +36,10 @@ func _build_ui() -> void:
 	for key in Sim.ZoneType:
 		_type_option.add_item(key)
 	create_row.add_child(_type_option)
-	var create_btn := Button.new()
-	create_btn.text = "Add Zone"
-	create_btn.pressed.connect(_on_create_pressed)
-	create_row.add_child(create_btn)
+	var paint_btn := Button.new()
+	paint_btn.text = "Paint Zone"
+	paint_btn.pressed.connect(_on_paint_pressed)
+	create_row.add_child(paint_btn)
 
 	outer.add_child(HSeparator.new())
 
@@ -97,10 +96,9 @@ func _rebuild_zone_list(zones: Dictionary) -> void:
 
 		_zone_list.add_child(row)
 
-func _on_create_pressed() -> void:
+func _on_paint_pressed() -> void:
 	var type_idx: int = _type_option.get_selected_id()
-	# Placeholder bounds (4x2 = 8 tiles). Spatial placement comes in Phase 3.
-	SimState.create_zone_requested.emit(type_idx, 0, 0, 4, 2)
+	paint_mode_requested.emit(type_idx)
 
 func _request_set_workers(zone_id: String, count: int) -> void:
 	SimState.set_workers_requested.emit(zone_id, count)

@@ -39,9 +39,9 @@ func _seed_starting_zones(balance: Dictionary) -> void:
 	for entry in balance.get("starting_zones", []):
 		var type_name: String = entry.get("type", "FARM")
 		var workers: int = entry.get("workers", 0)
-		var area: int = entry.get("area", 4)
+		var b: Array = entry.get("bounds", [0, 0, 4, 4])
 		var type_val: int = Sim.ZoneType[type_name]
-		var zone_id := zones.create_zone(type_val, Rect2i(0, 0, area, 1))
+		var zone_id := zones.create_zone(type_val, Rect2i(b[0], b[1], b[2], b[3]))
 		zones.set_workers(zone_id, workers)
 
 # Command handlers — these are the only functions that mutate zone state.

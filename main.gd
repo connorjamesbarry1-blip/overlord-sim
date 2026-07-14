@@ -5,6 +5,10 @@ func _ready() -> void:
 	tick_runner.name = "TickRunner"
 	add_child(tick_runner)
 
+	var world = load("res://render/world.gd").new()
+	world.name = "World"
+	add_child(world)
+
 	var canvas := CanvasLayer.new()
 	canvas.name = "UI"
 	add_child(canvas)
@@ -18,3 +22,5 @@ func _ready() -> void:
 	zone_panel.name = "ZonePanel"
 	zone_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
 	canvas.add_child(zone_panel)
+
+	zone_panel.paint_mode_requested.connect(world.enter_paint_mode)
