@@ -13,6 +13,11 @@ config_version=5
 config/name="Overlord-sim"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+run/main_scene="res://main.tscn"
+
+[autoload]
+
+SimState="*res://sim/sim_state.gd"
 
 [display]
 

@@ -1,0 +1,11 @@
+{
+	"tick_interval_seconds": 1.0,
+	"starting_population": 20,
+	"starting_food": 100,
+	"starting_wood": 50,
+	"starting_farm_workers": 8,
+	"starting_lumber_workers": 4,
+	"farm_food_per_worker_per_tick": 2,
+	"lumber_wood_per_worker_per_tick": 2,
+	"food_per_capita_per_tick": 1
+}

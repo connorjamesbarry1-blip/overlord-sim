@@ -1,0 +1,9 @@
+{
+	"FOOD":   { "cap": 500 },
+	"WOOD":   { "cap": 500 },
+	"STONE":  { "cap": 1000 },
+	"IRON":   { "cap": 500 },
+	"STEEL":  { "cap": 250 },
+	"GEMS":   { "cap": 100 },
+	"ARCANA": { "cap": 100 }
+}
