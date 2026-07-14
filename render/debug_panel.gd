@@ -7,6 +7,7 @@ var _tick_label: Label
 var _status_label: Label
 var _res_labels: Dictionary = {}
 var _pop_label: Label
+var _zone_summary: VBoxContainer
 
 func _ready() -> void:
 	_build_ui()
@@ -49,6 +50,15 @@ func _build_ui() -> void:
 	_pop_label = Label.new()
 	vbox.add_child(_pop_label)
 
+	vbox.add_child(HSeparator.new())
+
+	var zone_header := Label.new()
+	zone_header.text = "Zone        workers   eff"
+	vbox.add_child(zone_header)
+
+	_zone_summary = VBoxContainer.new()
+	vbox.add_child(_zone_summary)
+
 func _on_tick_completed(snapshot: Dictionary) -> void:
 	_tick_label.text = "Tick: %d" % snapshot["tick"]
 
@@ -77,3 +87,14 @@ func _on_tick_completed(snapshot: Dictionary) -> void:
 	for row in snapshot["population"].values():
 		total_pop += row["count"]
 	_pop_label.text = "Population: %d" % total_pop
+
+	for child in _zone_summary.get_children():
+		child.queue_free()
+	for z in snapshot.get("zones", {}).values():
+		var lbl := Label.new()
+		lbl.text = "  %-10s  %3d wk   %.2f" % [
+			z.get("type_name", "?"),
+			z["assigned_workers"],
+			z.get("efficiency", 0.0),
+		]
+		_zone_summary.add_child(lbl)

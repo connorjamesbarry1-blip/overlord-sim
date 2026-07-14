@@ -1,0 +1,14 @@
+{
+	"zone_types": {
+		"FARM":     { "output_resource": "FOOD",  "base_rate_per_worker": 2.0, "optimal_workers_per_tile": 2.0, "saturation_exponent": 0.7 },
+		"LUMBER":   { "output_resource": "WOOD",  "base_rate_per_worker": 2.0, "optimal_workers_per_tile": 1.5, "saturation_exponent": 0.7 },
+		"MINE":     { "output_resource": "STONE", "base_rate_per_worker": 1.5, "optimal_workers_per_tile": 1.0, "saturation_exponent": 0.6 },
+		"SMELTER":  { "output_resource": "STEEL", "base_rate_per_worker": 0.5, "optimal_workers_per_tile": 1.0, "saturation_exponent": 0.8 },
+		"HOUSING":  { "output_resource": null,    "base_rate_per_worker": 0.0, "optimal_workers_per_tile": 4.0, "saturation_exponent": 1.0 },
+		"BARRACKS": { "output_resource": null,    "base_rate_per_worker": 0.0, "optimal_workers_per_tile": 2.0, "saturation_exponent": 1.0 },
+		"WORKSHOP": { "output_resource": null,    "base_rate_per_worker": 0.0, "optimal_workers_per_tile": 1.0, "saturation_exponent": 0.9 },
+		"STOCKPILE":{ "output_resource": null,    "base_rate_per_worker": 0.0, "optimal_workers_per_tile": 0.5, "saturation_exponent": 1.0 }
+	},
+	"terrain_quality_default": 1.0,
+	"min_efficiency": 0.05
+}

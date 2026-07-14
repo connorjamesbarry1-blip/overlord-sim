@@ -13,3 +13,8 @@ func _ready() -> void:
 	panel.name = "DebugPanel"
 	panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	canvas.add_child(panel)
+
+	var zone_panel = load("res://render/zone_panel.gd").new()
+	zone_panel.name = "ZonePanel"
+	zone_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	canvas.add_child(zone_panel)

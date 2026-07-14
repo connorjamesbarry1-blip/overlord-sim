@@ -1,17 +1,12 @@
 extends Node
 
-# Drives the simulation tick. Phase 1: steps 2-4 only.
+# Drives the simulation tick. Phase 2: steps 2-4.
 # Order is load-bearing — do not reorder without updating DESIGN.md §4.
 
 var _balance: Dictionary = {}
-var _farm_workers: int = 0
-var _lumber_workers: int = 0
 
 func _ready() -> void:
 	_balance = SimUtil.load_json("res://data/balance.json")
-	_farm_workers = _balance.get("starting_farm_workers", 8)
-	_lumber_workers = _balance.get("starting_lumber_workers", 4)
-
 	var timer := Timer.new()
 	timer.wait_time = float(_balance.get("tick_interval_seconds", 1.0))
 	timer.timeout.connect(_on_tick)
@@ -26,10 +21,17 @@ func _on_tick() -> void:
 	SimState.emit_snapshot()
 
 func _step2_compute_production() -> void:
-	var food_rate := _farm_workers * float(_balance.get("farm_food_per_worker_per_tick", 2))
-	var wood_rate := _lumber_workers * float(_balance.get("lumber_wood_per_worker_per_tick", 2))
-	SimState.ledger.set_production_rate(Sim.Res.FOOD, food_rate)
-	SimState.ledger.set_production_rate(Sim.Res.WOOD, wood_rate)
+	# Zero all rates first so zones that lost workers don't carry stale values.
+	for res in Sim.Res.values():
+		SimState.ledger.set_production_rate(res, 0.0)
+	# Sum production across all zones.
+	for zone in SimState.zones.get_all_zones():
+		var res_val: int = SimState.zones.get_output_resource(zone["zone_id"])
+		if res_val == -1:
+			continue
+		var prod: float = SimState.zones.compute_zone_production(zone["zone_id"])
+		var current: float = SimState.ledger._rows[res_val]["production_rate"]
+		SimState.ledger.set_production_rate(res_val, current + prod)
 
 func _step3_compute_consumption() -> void:
 	var pop := SimState.population.get_total_population()
