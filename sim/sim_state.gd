@@ -54,8 +54,8 @@ func _on_destroy_zone_requested(zone_id: String) -> void:
 
 func _on_set_workers_requested(zone_id: String, count: int) -> void:
 	var total_pop := population.get_total_population()
-	var current_for_zone := zones.get_zone(zone_id).get("assigned_workers", 0)
-	var assigned_elsewhere := zones.get_total_assigned_workers() - current_for_zone
+	var current_for_zone: int = zones.get_zone(zone_id).get("assigned_workers", 0)
+	var assigned_elsewhere: int = zones.get_total_assigned_workers() - current_for_zone
 	var available := total_pop - assigned_elsewhere
 	zones.set_workers(zone_id, clampi(count, 0, available))
 
